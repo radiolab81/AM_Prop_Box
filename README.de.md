@@ -8,6 +8,10 @@ Ausbreitung für **einen Empfangsort** und steuert **einen Modulator** (AMWaveSy
 einem headless Raspberry Pi 4/5 oder PC) per UDP. Modulator und ESP32 hängen im selben WLAN. Bedienung über ein Webinterface
 mit Karte, eine serielle Konsole sowie optional Jumper / Taste / LED.
 
+![ui1](/images/webui1.jpg)
+
+![ui4](/images/webui4.jpg)
+
 Aus Senderdaten (Standort, Leistung – etwa aus einem alten WRTH) berechnet die Box Boden- und Raumwelle am Empfangsort
 für das gewählte Datum und die Tageszeit und stellt laufend die Trägeramplitude jedes Senders am Modulator ein. So
 entsteht ein lebendiges Band mit wandernder Dämmerungszone: Mittelwellensender kommen abends von oben nach unten
@@ -22,10 +26,12 @@ auf HF-Ebene hinzu.
   * *ITU-R P.1147-2 (mit Jahreszeiten)* – Raumwelle nach ITU-R P.1147-2 mit parametrischer Jahreszeitenkorrektur, Norton-Bodenwelle.
 * **Simulationsuhr:** Datum und Uhrzeit frei setzbar; Tempo ×1 / ×60 / ×600 / ×3600; optional echte UTC-Zeit per SNTP (nur ×1).
 * **Empfänger auf der Karte** (Leaflet, wird vom ESP32 ausgeliefert): Karte anklicken oder blauen Punkt ziehen; Sender nach Empfangspegel eingefärbt; Live-Liste der hörbaren Sender mit Pegel (dBµV/m) und Weg (G = Boden-, S = Raumwelle).
+  ![ui2](/images/webui2.jpg)
 * **Schwelle** der Empfängerempfindlichkeit und **Gain-Modus** *kompatibel* (linear 40 dB wie im Original) oder *physikalisch* (echte dB-Skala, Fenster 20–32 dB).
 * **Szenarien** (Senderlisten als Textdateien im Flash): `1975_WRTH` (132 Sender, LW/MW Europa 1975), `Hokkaido_Sakhalin_2026` (39), `COHIPlayerUniversal_Test` (31). Umschaltung zur Laufzeit; Sender des alten Szenarios werden am Modulator stumm geschaltet (Gain 0.0).
 * **Peilantennen** (`.msi`-Diagramme, Horizontalschnitt): Ferritstab, K9AY-Kardioide, Rundstrahler. Virtuelle Antenne 0–359° drehbar; die Bodenwelle erhält die volle Diagrammdämpfung, die Raumwelle in den Modellen, die das vorsehen, einen entfernungsabhängigen Anteil (Nachteffekt).
 * **Sferics / Gewitter:** Gewitterzelle mit Stärke, Geschwindigkeit und Kurs auf der Karte setzen; sie zieht über die Karte und feuert Sferics (UDP 8889), deren Rate vom Abstand zum Empfänger abhängt.
+    ![ui3](/images/webui3.jpg)
 * **Trägertest (Modulator-Abgleich):** setzt *alle* Träger im 1-kHz-Raster (100–1700 kHz, 1601 Pakete) auf Gain 0.0, 1.0 oder einen beliebigen Wert – im Web-UI („Modulator-Test") oder mit `carriers`. Anders als im PC-Simulator **pausiert** die Simulation währenddessen (sonst würde die nächste Berechnung den Test überschreiben); „Simulation fortsetzen“ / `carriers auto` schaltet alles auf 0.0 und setzt fort.
 * **DFscope-kompatibler UDP-Eingang** (8886 Position, 8887 Kurs, `GET_CONFIG`, `GET_TRANSMITTERS`): PC-Plugins (DFscope, MovableRXLocationPlayer) können die Box steuern.
 * **Einstellungen bleiben erhalten** (NVS); mDNS-Name (`amprop.local`); Setup-Access-Point, falls kein WLAN eingerichtet ist.
