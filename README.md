@@ -8,6 +8,10 @@ for **one receiver location** and drives **one modulator** (AMWaveSynth / COHI-P
 headless Raspberry Pi 4/5 or PC) over UDP. Modulator and ESP32 sit in the same Wi-Fi network. Operation is
 through a web interface with a map, a serial console, and optional jumpers / button / LED.
 
+![ui1](/images/webui1.jpg)
+
+![ui4](/images/webui4.jpg)
+
 Based on transmitter data (location, power – e.g. from an old WRTH) the box computes ground wave and
 sky wave at the receiver location for the chosen date and time of day, and continuously sets the
 carrier amplitude of every transmitter on the modulator. The result is a live band with a moving
@@ -22,10 +26,12 @@ night, and the band closes again at dawn. Thunderstorms add sferics at RF level.
   * *ITU-R P.1147-2 (mit Jahreszeiten)* – sky wave after ITU-R P.1147-2 with a parametric seasonal correction, Norton ground wave.
 * **Simulation clock:** set date and time freely; speed x1 / x60 / x600 / x3600; optionally follow real UTC via SNTP (x1 only).
 * **Receiver on a map** (Leaflet, runs from the ESP32): click the map or drag the blue dot; transmitters are coloured by received level; live list of what is audible, with level (dBµV/m) and path (G = ground, S = sky).
+    ![ui2](/images/webui2.jpg)
 * **Threshold** of the receiver sensitivity and **gain mode** *compatible* (linear 40 dB, as in the original) or *physical* (true dB scale, window 20–32 dB).
 * **Scenarios** (transmitter lists, text files in flash): `1975_WRTH` (132 transmitters, LW/MW Europe 1975), `Hokkaido_Sakhalin_2026` (39), `COHIPlayerUniversal_Test` (31). Switch at runtime; transmitters of the old scenario are muted on the modulator (gain 0.0).
 * **Direction-finding antennas** (`.msi` patterns, horizontal section): ferrite rod, K9AY cardioid, omni whip. Rotate the virtual antenna 0–359°; the ground wave gets the full pattern attenuation, the sky wave in the models that do so a distance-dependent share (night effect).
 * **Sferics / thunderstorm:** place a storm cell on the map with intensity, speed and heading; it moves across the map and fires sferics (UDP 8889) whose rate depends on its distance to the receiver.
+  ![ui3](/images/webui3.jpg)
 * **Carrier test (modulator sync):** sets *all* carriers on the 1 kHz grid (100–1700 kHz, 1601 packets) to gain 0.0, 1.0 or any value – in the web UI ("Modulator-Test") or with `carriers`. Unlike the PC simulator, the simulation is **paused** while the test is active (otherwise the next calculation would overwrite it); "Simulation fortsetzen" / `carriers auto` mutes everything and resumes.
 * **DFscope-compatible UDP input** (8886 position, 8887 heading, `GET_CONFIG`, `GET_TRANSMITTERS`), so the PC plugins (DFscope, MovableRXLocationPlayer) can steer the box.
 * **Settings persist** in NVS; mDNS name (`amprop.local`); Setup access point if no Wi-Fi is configured.
